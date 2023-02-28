@@ -2,10 +2,14 @@
 title: "Assignment 3, Task 1"
 author: "I. Requena"
 date: "2023-02-28"
-output: html_document
+output: 
+  html_document:
+    code_folding: hide
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, echo=TRUE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, results=FALSE)
+
+
 ```
 
