@@ -7,9 +7,70 @@ output:
     code_folding: hide
 ---
 
+### Introduction:
+
+#1.	A useful descriptive introductory summary (3 - 4 sentences) that helps the audience understand the data (include a citation as necessary) and what you’ll be exploring
+
+This is a selected set of variables:
+
+In Task 1 of Assignment 3, we want to know if the morphological traits of palmetto palms can predict the species. To answer this question, a model was built which analyses morphological variables (such as height, canopoy length, canopy width, and leaf count) given the type of palm species (Serenoa repens or Sabal etonia). A second model was built with all variables but excluded canopy length. The data used in this task, obtained from the [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.317.1), is part of a study conducted in south-central Florida from 1981 to 2017 in 5-year intervals (Abrahamson, 2019).
+
+**Data source:** Abrahamson, W.G. 2019. Survival, growth and biomass estimates of two dominant palmetto species of south-central Florida from 1981 - 2017, ongoing at 5-year intervals ver 1. Environmental Data Initiative.
+
 ```{r setup, echo=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, results=FALSE)
 
+library(tidyverse)
+library(here)
 
+
+# For Part 1 (PCA)
+library(ggfortify) # For PCA biplot
+library(patchwork)
+
+# For Part 2 (ggplot customization)
+library(readxl)
+library(gghighlight) # For useful highlighting
+library(lubridate) # For easier dates & times
+library(plotly) # Interactive graphs
 ```
+
+### Read & Wrangle data
+```{r}
+df_global <- read_csv(here('data/world_env_vars.csv')) %>%
+  drop_na() 
+
+glimpse(df_global)
+
+global_pca <- df_global %>%
+  dplyr::select(where(is.numeric)) %>%  # selects when its numeric across all different columns
+  scale() %>% #takes each column with numeric values (life expectancy and rescaling by the average)
+  prcomp()
+```
+
+# Create a BiPlot automatically!
+```{r}
+autoplot(global_pca,
+     	data = df_global,
+     	loadings = TRUE,
+     	loadings.label = TRUE,
+     	loadings.colour = "black",
+     	loadings.label.colour = "black",
+     	loadings.label.vjust = -0.5)+
+  scale_color_manual(values = c('red', 'orange', 'yellowgreen', 'darkgreen'))+
+  theme_minimal()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
