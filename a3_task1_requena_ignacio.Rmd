@@ -1,5 +1,5 @@
 ---
-title: "Assignment 3, Task 1"
+title: "Assignment 3, Task 1: Principal Components Analysis"
 author: "I. Requena"
 date: "2023-02-28"
 output: 
@@ -11,9 +11,13 @@ output:
 
 #1.	A useful descriptive introductory summary (3 - 4 sentences) that helps the audience understand the data (include a citation as necessary) and what you’ll be exploring
 
+This data is all acquired through Google Earth Engine (https://earthengine.google.com/) where publicly available remote sensing datasets have been uploaded to the cloud to be manipulated by the average Joe like you and I. Most of the data is derived by calculating the mean for each country at a reduction scale of about 10km.
+
 This is a selected set of variables:
 
-In Task 1 of Assignment 3, we want to know if the morphological traits of palmetto palms can predict the species. To answer this question, a model was built which analyses morphological variables (such as height, canopoy length, canopy width, and leaf count) given the type of palm species (Serenoa repens or Sabal etonia). A second model was built with all variables but excluded canopy length. The data used in this task, obtained from the [EDI Data Portal](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.317.1), is part of a study conducted in south-central Florida from 1981 to 2017 in 5-year intervals (Abrahamson, 2019).
+elevation, temperature mean annual, cropland cover, tree canonpy cover, mean mean annual, cloudiness 
+
+In Task 1 of Assignment 3, we want to know if the morphological traits of palmetto palms can predict the species. To answer this question, a model was built which analyses morphological variables (such as height, canopoy length, canopy width, and leaf count) given the type of palm species (Serenoa repens or Sabal etonia). A second model was built with all variables but excluded canopy length. The data used in this task, obtained from the [EDI Data Portal](https://www.kaggle.com/datasets/zanderventer/environmental-variables-for-world-countries), is part of a study conducted in south-central Florida from 1981 to 2017 in 5-year intervals (Abrahamson, 2019).
 
 **Data source:** Abrahamson, W.G. 2019. Survival, growth and biomass estimates of two dominant palmetto species of south-central Florida from 1981 - 2017, ongoing at 5-year intervals ver 1. Environmental Data Initiative.
 
@@ -35,10 +39,12 @@ library(lubridate) # For easier dates & times
 library(plotly) # Interactive graphs
 ```
 
+elevation, temperature mean annual, cropland cover, tree canonpy cover, mean mean annual, cloudiness 
 ### Read & Wrangle data
 ```{r}
 df_global <- read_csv(here('data/world_env_vars.csv')) %>%
-  drop_na() 
+  drop_na() %>% 
+  select(elevation, cropland_cover, tree_canopy_cover, rain_mean_annual, temp_mean_annual, cloudiness)
 
 glimpse(df_global)
 
@@ -61,11 +67,13 @@ autoplot(global_pca,
   theme_minimal()
 ```
 
+## Screeplot by hand
 
-
-
-
-
+```{r}
+# Variance explained by each PC
+screeplot(global_pca, type = "lines")
+screeplot(global_pca, type = "barplot")
+```
 
 
 

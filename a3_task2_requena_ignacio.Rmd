@@ -1,0 +1,19 @@
+---
+title: "Assignment 3, Task 2: Agglomerative hierarchical clustering"
+author: "I. Requena"
+date: "2023-02-28"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+### Introduction:
+
+
+```{r setup, echo=TRUE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, results=FALSE)
+
+
+
+```
+
