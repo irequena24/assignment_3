@@ -9,13 +9,9 @@ output:
 
 Instructions
 
-Use **hierarchical clustering by complete linkage** to create a dendrogram showing multivariate clustering for water chemistry by site. To do this youll want to make a data frame that has a single summary row per site (e.g. based on means from all observations at that site), then calculate the Euclidean distance before performing complete linkage agglomerative hierarchical clustering. )
+Use **hierarchical clustering by complete linkage** to create a dendrogram showing multivariate clustering for water chemistry by site. To do this youll want to make a data frame that has a single summary row per site (e.g. based on means from all observations at that site), then calculate the Euclidean distance before performing complete linkage agglomerative hierarchical clustering.
 
-Create a finalized HTML (knitted from .Rmd) that includes: 
-1.	A useful descriptive introductory summary (3 - 4 sentences) that helps the audience understand the data (include a citation as necessary) and what you’ll be exploring
-2.	All of your organized and well-annotated code (with warnings/messages suppressed) you wrote to wrangle data then create the dendrogram, and to create a professional looking dendrogram that appears (with a caption) in your knitted HTML.  
-3.	Optional: rerun the dendrogram using a single linkage method, and include a tanglegram (in addition to your pro-quality dendrogram) to show how the different linkage changes the clustering.
-4.	A brief summary (nicely formatted and professionally written bulletpoints are fine) highlighting some major takeaways from your hierarchical clustering analysis that can be gleaned from the dendrogram(s).
+
 
 ```{r setup, echo=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, results=FALSE)
@@ -57,6 +53,8 @@ df_streams[df_streams == 'RG01'] <- 'Refugio Creek'
 df_streams[df_streams == 'RS02'] <- 'Rattlesnake Creek'
 df_streams[df_streams == 'SP02'] <- 'San Pedro Creek'
 df_streams[df_streams == 'OO02'] <- 'Tecolote Creek'
+
+summary(df_streams)
 ```
 
 ### Introduction:
