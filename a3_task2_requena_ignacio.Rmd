@@ -6,12 +6,9 @@ output:
   html_document:
     code_folding: hide
 ---
-
 Instructions
 
 Use **hierarchical clustering by complete linkage** to create a dendrogram showing multivariate clustering for water chemistry by site. To do this youll want to make a data frame that has a single summary row per site (e.g. based on means from all observations at that site), then calculate the Euclidean distance before performing complete linkage agglomerative hierarchical clustering.
-
-
 
 ```{r setup, echo=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, results=FALSE)
