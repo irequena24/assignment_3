@@ -9,7 +9,17 @@ output:
 
 ### Introduction:
 
-The purpose of Task 1 of Assignment 3 is to conduct Principal Components Analysis (PCA) using [world environmental data](https://www.kaggle.com/datasets/zanderventer/environmental-variables-for-world-countries). The data was constructed through publicly available remote sensing datasets provided by [Google Earth Engine](https://earthengine.google.com/). With this information, we want to determine to what degree do elevation, temperature, rainfall, and cloud affect biomass (surface cropland and tree canopy surface). Furthermore, we would explore how these variables related.
+#1.	A useful descriptive introductory summary (3 - 4 sentences) that helps the audience understand the data (include a citation as necessary) and what you’ll be exploring
+
+This data is all acquired through Google Earth Engine (https://earthengine.google.com/) where publicly available remote sensing datasets have been uploaded to the cloud to be manipulated by the average Joe like you and I. Most of the data is derived by calculating the mean for each country at a reduction scale of about 10km.
+
+This is a selected set of variables:
+
+elevation, temperature mean annual, cropland cover, tree canonpy cover, mean mean annual, cloudiness 
+
+In Task 1 of Assignment 3, we want to know if the morphological traits of palmetto palms can predict the species. To answer this question, a model was built which analyses morphological variables (such as height, canopoy length, canopy width, and leaf count) given the type of palm species (Serenoa repens or Sabal etonia). A second model was built with all variables but excluded canopy length. The data used in this task, obtained from the [EDI Data Portal](https://www.kaggle.com/datasets/zanderventer/environmental-variables-for-world-countries), is part of a study conducted in south-central Florida from 1981 to 2017 in 5-year intervals (Abrahamson, 2019).
+
+**Data source:** Abrahamson, W.G. 2019. Survival, growth and biomass estimates of two dominant palmetto species of south-central Florida from 1981 - 2017, ongoing at 5-year intervals ver 1. Environmental Data Initiative.
 
 ```{r setup, echo=TRUE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, results=FALSE)
@@ -29,45 +39,46 @@ library(lubridate) # For easier dates & times
 library(plotly) # Interactive graphs
 ```
 
-### PCA biplot
-
-The lenght of a line indicates variance (longer length=more variance)
-The angle between lines indicates correlation
-
-Crop cover and elevation are positively correlated. 
-
+elevation, temperature mean annual, cropland cover, tree canonpy cover, mean mean annual, cloudiness 
+### Read & Wrangle data
 ```{r}
-# 1. Read & Wrangle data
-
 df_global <- read_csv(here('data/world_env_vars.csv')) %>%
   drop_na() %>% 
   select(elevation, cropland_cover, tree_canopy_cover, rain_mean_annual, temp_mean_annual, cloudiness)
+
+glimpse(df_global)
 
 global_pca <- df_global %>%
   dplyr::select(where(is.numeric)) %>%  # selects when its numeric across all different columns
   scale() %>% #takes each column with numeric values (life expectancy and rescaling by the average)
   prcomp()
+```
 
-#2. Create biplot automatically with ggfortify
-
+# Create a BiPlot automatically!
+```{r}
 autoplot(global_pca,
-     	data = df_global, 
+     	data = df_global,
      	loadings = TRUE,
      	loadings.label = TRUE,
-     	loadings.colour = "blue",
-     	loadings.label.colour = "darkgrey",
+     	loadings.colour = "black",
+     	loadings.label.colour = "black",
      	loadings.label.vjust = -0.5)+
+  scale_color_manual(values = c('red', 'orange', 'yellowgreen', 'darkgreen'))+
   theme_minimal()
 ```
 
-### Screeplot
-
-Useful for visualizing PC contributions
+## Screeplot by hand
 
 ```{r}
 # Variance explained by each PC
 screeplot(global_pca, type = "lines")
 screeplot(global_pca, type = "barplot")
 ```
-### Summary
+
+
+
+
+
+
+
 
